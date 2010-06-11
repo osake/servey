@@ -1,13 +1,25 @@
 var action = exports;
 
+var commands = 
+  ["name",
+   "users",
+   "state",
+   "quit",
+   "help"];
+
+
 action.slash_command = function (command, clients, stream, client) {
-  switch(command[1]) {
+  // stream.write("COMMAND: " + command[1] + "\n");
+  params = command[1].split(" ");
+  switch(params[0]) {
     case "name":
-      if(command) {
-        stream.write(command + "<-- new name?\n");
+      if(params[1]) {
+        client.name = params[1]
+        stream.write("Your new name is " + params[1] + "\n");
       } else {
         stream.write(client.name + "\n");
       }
+      break;
     case "users":
       clients.forEach(function(c) {
         stream.write("- " + c.name + "\n");
@@ -20,8 +32,12 @@ action.slash_command = function (command, clients, stream, client) {
       stream.end();
       break;
     case "help":
-      stream.write("Help stuff.\n");
+      commands.forEach(function(c) {
+        stream.write("- " + c + "\n");
+      });
+      break;
     default:
+      stream.write(command + " not found!\n");
       // no default action, sorry
       break;
   }

@@ -15,12 +15,6 @@ function Client(stream) {
 
 var clients = [];
 
-var commands = 
-  ["name",
-   "users",
-   "quit",
-   "users"];
-
 var prompt = "> ";
 
 var server = net.createServer(function (stream) {

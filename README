@@ -5,3 +5,8 @@ Borrowing heavily from:
 
 to create my own little node client/server experiment.
 
+To start the server:
+
+node intermediate.js
+
+Then telnet to localhost 7000
