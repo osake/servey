@@ -14,7 +14,7 @@ action.slash_command = function (command, clients, stream, client) {
   switch(params[0]) {
     case "name":
       if(params[1]) {
-        client.name = params[1]
+        client.name = params[1];
         stream.write("Your new name is " + params[1] + "\n");
       } else {
         stream.write(client.name + "\n");
@@ -41,4 +41,4 @@ action.slash_command = function (command, clients, stream, client) {
       // no default action, sorry
       break;
   }
-}
+};
