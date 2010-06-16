@@ -1,3 +1,4 @@
+var db_conn = require("./plugins/redis-node-client/lib/redis-client").createClient();
 var action = exports;
 
 var commands = 
@@ -14,8 +15,15 @@ action.slash_command = function (command, clients, stream, client) {
   switch(params[0]) {
     case "name":
       if(params[1]) {
-        client.name = params[1];
-        stream.write("Your new name is " + params[1] + "\n");
+        db_conn.get(params[1], function(err, name) {
+          if(name) {
+            stream.write("That name already exists!\n");
+          } else {
+            db_conn.del(client.name);
+            client.name = params[1];
+            stream.write("Your new name is " + params[1] + "\n");
+          }
+        })
       } else {
         stream.write(client.name + "\n");
       }

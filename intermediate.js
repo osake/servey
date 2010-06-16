@@ -1,5 +1,6 @@
 var net = require("net");
 var action = require("./commands");
+var db_conn = require("./plugins/redis-node-client/lib/redis-client").createClient();
 
 Array.prototype.remove = function(e) {
   for (var i = 0; i < this.length; i++) {
@@ -31,6 +32,7 @@ var server = net.createServer(function (stream) {
   stream.addListener("data", function (data) {
     if (client.name === null) {
       client.name = data.match(/\S+/);
+      db_conn.set(client.name, client.name);
       if (client.name === null) {
         stream.end();
         return; // must have this call or the server breaks
