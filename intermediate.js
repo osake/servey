@@ -41,6 +41,7 @@ var server = net.createServer(function (stream) {
       clients.forEach(function(c) {
         if (c != client && c.state == "active") {
           c.stream.write(client.name + " has joined.\n");
+          c.stream.write(prompt);
         }
       });
       return;
@@ -53,15 +54,16 @@ var server = net.createServer(function (stream) {
     var command = data.match(/^\/(.*)/);
     if (command && client.state == "active") {
       action.slash_command(command, clients, stream, client);
+      client.stream.write(prompt);
       return; // is this what wipes out the rest of the checking below?  guess so...
     }
 
-    clients.forEach(function(c) {
-      if (c.state == "active") {
-        c.stream.write(client.name + ": " + data);
-        c.stream.write(prompt);
-      }
-    });
+    command = data.match(/^'(.*)/);
+    if (command && client.state == "active") {
+      action.say_command(command, clients, stream, client);
+      client.stream.write(prompt);
+      return; // is this what wipes out the rest of the checking below?  guess so...
+    }
   });
 
   stream.addListener("end", function() {

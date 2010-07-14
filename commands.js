@@ -8,7 +8,6 @@ var commands =
    "quit",
    "help"];
 
-
 action.slash_command = function (command, clients, stream, client) {
   // stream.write("COMMAND: " + command[1] + "\n");
   params = command[1].split(" ");
@@ -23,7 +22,7 @@ action.slash_command = function (command, clients, stream, client) {
             client.name = params[1];
             stream.write("Your new name is " + params[1] + "\n");
           }
-        })
+        });
       } else {
         stream.write(client.name + "\n");
       }
@@ -45,8 +44,17 @@ action.slash_command = function (command, clients, stream, client) {
       });
       break;
     default:
-      stream.write(command + " not found!\n");
+      stream.write(command[1] + " -- Invalid command!\n");
       // no default action, sorry
       break;
   }
+};
+
+action.say_command = function (command, clients, stream, client) {
+  data = command[1];
+  clients.forEach(function(c) {
+    if (c.state == "active") {
+      c.stream.write(client.name + ": " + data + "\n");
+    }
+  });
 };
