@@ -51,10 +51,23 @@ action.slash_command = function (command, clients, stream, client) {
 };
 
 action.say_command = function (command, clients, stream, client) {
-  data = command[1];
+  data = trim(command[2]);
+  
   clients.forEach(function(c) {
     if (c.state == "active") {
       c.stream.write(client.name + ": " + data + "\n");
     }
   });
 };
+
+// Wondering if some lib doesn't already have this stuff for me, heh
+function ltrim(str){
+  return str.replace(/^\s+/, '');
+}
+function rtrim(str) {
+  return str.replace(/\s+$/, '');
+}
+function trim(str) {
+  return str.replace(/^\s+|\s+$/g, '');
+}
+

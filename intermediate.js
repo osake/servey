@@ -58,7 +58,7 @@ var server = net.createServer(function (stream) {
       return; // is this what wipes out the rest of the checking below?  guess so...
     }
 
-    command = data.match(/^'(.*)/);
+    command = data.match(/^('|say)(.*)/);
     if (command && client.state == "active") {
       action.say_command(command, clients, stream, client);
       client.stream.write(prompt);
