@@ -3,10 +3,18 @@ Borrowing heavily from:
 * http://dhotson.tumblr.com/post/271733389/a-simple-chat-server-in-node-js
 * http://github.com/ry/node_chat
 
-to create my own little node client/server experiment.
+to create my own little node client/server experiment.  I haven't added any
+versioning to this project yet as it is still very experimental.
+
+Requirements:
+
+* node.js
+* redis
+* redis-node-client
 
 To start the server:
 
-node intermediate.js
+ensure node is running
+$ node intermediate.js
 
 Then telnet to localhost 7000
